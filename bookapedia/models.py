@@ -36,16 +36,14 @@ class Book(models.Model):
     title = models.CharField(max_length=500, null=False)
     author = models.CharField(max_length=200, null=True)
     description = models.CharField(max_length=2000, null=True)
-    genre = models.CharField(max_length=300, null=True)
+    # genre = models.CharField(max_length=300, null=True)
     date_published = models.DateField(null=True)
     marked_read = models.BooleanField(null=True)
+    image_link = models.URLField()
+    saved_by = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
 
     class Meta:
         ordering = ['id']
 
     def __str__(self):
         return self.title
-
-class Bookshelf(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
-    book = models.ForeignKey(Book, on_delete=models.PROTECT)

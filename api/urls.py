@@ -17,10 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
+from bookapedia import views
+# from rest_framework import routers
+
+# router = routers.DefaultRouter()
+# router.register(r'my-books', views.my_books)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),  # override sjwt stock token
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('', include('bookapedia.urls'))
+    path('', include('bookapedia.urls')),
+    path('save-book/', views.save_book, name='save_book'),
+    path('my-books/', views.BookList.as_view(), name='my_books'),
 ]
