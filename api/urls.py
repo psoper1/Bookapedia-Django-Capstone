@@ -30,4 +30,5 @@ urlpatterns = [
     path('', include('bookapedia.urls')),
     path('save-book/', views.save_book, name='save_book'),
     path('my-books/', views.BookList.as_view(), name='my_books'),
+    path('my-books/<int:pk>/', views.BookList.as_view()), # This will need to connect to a new view
 ]

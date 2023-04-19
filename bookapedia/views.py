@@ -41,7 +41,7 @@ def save_book(request):
 
 class BookList(generics.ListAPIView):
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated] #IsAuthenticatedOrReadOnly, try this, maybe I will be able to see it on the admin console
 
     def get_queryset(self):
         user_id = self.request.user
