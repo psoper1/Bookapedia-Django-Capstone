@@ -3,10 +3,13 @@ from rest_framework import viewsets
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import status, permissions, generics
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.decorators import action, api_view
-from .models import CustomUser
+from django.contrib.auth.decorators import login_required
+from .models import CustomUser, Book
 from .serializers import *
+from django.shortcuts import get_object_or_404
 
 class UserCreate(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -39,16 +42,16 @@ def save_book(request):
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
 
-class BookList(generics.ListAPIView):
+class BookList(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.IsAuthenticated] #IsAuthenticatedOrReadOnly, try this, maybe I will be able to see it on the admin console
 
-    def get_queryset(self):
-        user_id = self.request.user
-        return Book.objects.filter(saved_by=user_id)
-
-# @api_view(['GET'])
-# def my_books(request):
-#     books = Book.objects.all()
-#     serializer = BookSerializer(books, many=True)
-#     return Response(serializer.data)
+    # Get a list of all books saved by every user
+    def list(self, request):
+        user = self.request.user
+        if user.is_authenticated:
+            queryset = Book.objects.filter(saved_by=user)
+        else:
+            queryset = Book.objects.all()
+        serializer = BookSerializer(queryset, many=True)
+        return Response(serializer.data)

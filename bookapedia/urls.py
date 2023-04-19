@@ -2,8 +2,11 @@ from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from .views import *
 from rest_framework import routers
+from bookapedia import views
 
 router = routers.DefaultRouter()
+# router.register(r'user-books', views.BookViewSet)
+router.register(r'books', BookList)
 
 urlpatterns = [
     path('', include(router.urls)),

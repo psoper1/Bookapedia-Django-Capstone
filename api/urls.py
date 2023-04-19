@@ -20,8 +20,7 @@ from rest_framework_simplejwt import views as jwt_views
 from bookapedia import views
 # from rest_framework import routers
 
-# router = routers.DefaultRouter()
-# router.register(r'my-books', views.my_books)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +28,6 @@ urlpatterns = [
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('', include('bookapedia.urls')),
     path('save-book/', views.save_book, name='save_book'),
-    path('my-books/', views.BookList.as_view(), name='my_books'),
-    path('my-books/<int:pk>/', views.BookList.as_view()), # This will need to connect to a new view
+    path('my-books/', views.BookList.as_view({'get': 'list'}), name='my_books'),
+    
 ]
