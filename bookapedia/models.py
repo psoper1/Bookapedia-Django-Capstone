@@ -24,7 +24,7 @@ class Book(models.Model):
     title = models.CharField(max_length=500, null=False)
     author = models.CharField(max_length=200, null=True)
     description = models.CharField(max_length=2000, null=True)
-    date_published = models.DateField(null=True)
+    date_published = models.CharField(max_length=100, null=True)
     marked_read = models.BooleanField(null=True)
     image_link = models.URLField()
     saved_by = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
