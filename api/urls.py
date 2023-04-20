@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from bookapedia import views
-# from rest_framework import routers
 
 
 
@@ -29,5 +28,8 @@ urlpatterns = [
     path('', include('bookapedia.urls')),
     path('save-book/', views.save_book, name='save_book'),
     path('my-books/', views.BookList.as_view({'get': 'list'}), name='my_books'),
+    path('my-books/', views.BookList.as_view({'get': 'read'}), name='read-books'),
+    path('read-books/', views.Read.as_view({'get': 'list'}), name='read'),
+    path('unread-books/', views.Unread.as_view({'get': 'list'}), name='unread'),
     
 ]

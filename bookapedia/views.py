@@ -46,11 +46,36 @@ class BookList(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
-    # Get a list of all books saved by every user
     def list(self, request):
         user = self.request.user
         if user.is_authenticated:
             queryset = Book.objects.filter(saved_by=user)
+        else:
+            queryset = Book.objects.all()
+        serializer = BookSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class Read(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def list(self, request):
+        user = self.request.user
+        if user.is_authenticated:
+            queryset = Book.objects.filter(marked_read=True, saved_by=self.request.user)
+        else:
+            queryset = Book.objects.all()
+        serializer = BookSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class Unread(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def list(self, request):
+        user = self.request.user
+        if user.is_authenticated:
+            queryset = Book.objects.filter(marked_read=False, saved_by=self.request.user)
         else:
             queryset = Book.objects.all()
         serializer = BookSerializer(queryset, many=True)
