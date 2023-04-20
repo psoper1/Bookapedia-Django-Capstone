@@ -5,7 +5,6 @@ from rest_framework import routers
 from bookapedia import views
 
 router = routers.DefaultRouter()
-# router.register(r'user-books', views.BookViewSet)
 router.register(r'books', BookList)
 
 urlpatterns = [
