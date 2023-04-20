@@ -28,6 +28,7 @@ class Book(models.Model):
     marked_read = models.BooleanField(null=True)
     image_link = models.URLField()
     saved_by = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    preview_link = models.URLField(null=True)
 
     class Meta:
         ordering = ['id']
