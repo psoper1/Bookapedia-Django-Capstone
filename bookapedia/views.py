@@ -6,10 +6,10 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.decorators import action, api_view
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from .models import CustomUser, Book
 from .serializers import *
-from django.shortcuts import get_object_or_404
+# from django.shortcuts import get_object_or_404
 
 class UserCreate(APIView):
     permission_classes = (permissions.AllowAny,)
