@@ -15,11 +15,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
+from bookapedia import views
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('token/obtain/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),  # override sjwt stock token
+    path('user/login/', jwt_views.TokenObtainPairView.as_view(), name='token_create'),  # override sjwt stock token
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('', include('bookapedia.urls')),
+    path('save-book/', views.save_book, name='save_book'),
+    path('my-books/', views.BookList.as_view({'get': 'list'}), name='my_books'),
+    path('my-books/', views.BookList.as_view({'get': 'read'}), name='read-books'),
+    path('read-books/', views.Read.as_view({'get': 'list'}), name='read'),
+    path('unread-books/', views.Unread.as_view({'get': 'list'}), name='unread'),
+    
 ]
